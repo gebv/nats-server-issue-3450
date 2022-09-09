@@ -10,13 +10,11 @@ download-mqtt-benchmark-darwin:
 	chmod +x $(BENCHBIN)
 	$(BENCHBIN) --help
 
-setup-docker:
-	docker-compose up -d nats-server-node1
-	docker-compose up -d nats-server-node2
-	docker-compose up -d nats-server-node3
-	sleep 10
-
-# run: setup-darwin setup-docker
 run:
-	./bench.sh
+	docker-compose up --detach --force-recreate --renew-anon-volumes --remove-orphans \
+        nats-server-node1 nats-server-node2 nats-server-node3
 
+	sleep 30
+
+	./bench.sh
+	./report.sh

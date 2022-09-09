@@ -40,18 +40,3 @@ cat client-node2-error.log
 cat client-node3.log
 cat client-node3-error.log
 
-
-if docker logs node1 2>&1 | grep -q MQIsdp
-    then { echo "FOUND"; docker logs node1; }
-    else echo "NOT FOUND"
-fi
-
-if docker logs node2 2>&1 | grep -q MQIsdp
-    then { echo "FOUND"; docker logs node2; }
-    else echo "NOT FOUND"
-fi
-
-if docker logs node3 2>&1 | grep -q MQIsdp
-    then { echo "FOUND"; docker logs node3; }
-    else echo "NOT FOUND"
-fi
