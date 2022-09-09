@@ -13,13 +13,13 @@
     --format text > client-node1.log 2>client-node1-error.log &
 
 CON_PID=$!
-log "Test: $CON_PID"
+echo "Test: $CON_PID"
 
-log "Wait test pids: $CON_PID kill timeout: 30s"
+echo "Wait test pids: $CON_PID kill timeout: 30s"
 sleep 30
 
 kill -9 $CON_PID
 
-log "Tests finished"
+echo "Tests finished"
 
 
