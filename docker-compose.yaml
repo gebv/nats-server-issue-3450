@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  nats-server-node1:
+    image: nats:2.8.4-scratch
+    ports:
+      - 127.0.0.1:10001:1883 # mqtt
+    hostname: node1
+    container_name: node1
+    restart: always
+    command: --config /config.conf
+    volumes:
+      - ./node1.conf:/config.conf:ro
+  nats-server-node2:
+    image: nats:2.8.4-scratch
+    ports:
+      - 127.0.0.1:10002:1883 # mqtt
+    hostname: node2
+    container_name: node2
+    restart: always
+    command: --config /config.conf
+    volumes:
+      - ./node2.conf:/config.conf:ro
+  nats-server-node3:
+    image: nats:2.8.4-scratch
+    ports:
+      - 127.0.0.1:10003:1883 # mqtt
+    hostname: node3
+    container_name: node3
+    restart: always
+    command: --config /config.conf
+    volumes:
+      - ./node3.conf:/config.conf:ro
