@@ -17,5 +17,4 @@ jobs:
     - name: Run
       run: |
         make download-mqtt-benchmark-linux
-        make setup-docker
         make run
