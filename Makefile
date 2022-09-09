@@ -18,6 +18,9 @@ setup-docker:
 # run: setup-darwin setup-docker
 run-test: setup setup-docker
 	./bench.sh
+	docker logs node1
+	docker logs node2
+	docker logs node3
 
 	# ./mqtt-benchmark --broker "tcp://127.0.0.1:10001" \
     #         --client-prefix "connect-to-node-1" \

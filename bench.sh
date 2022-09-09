@@ -22,4 +22,7 @@ kill -9 $CON_PID
 
 echo "Tests finished"
 
+cat client-node1.log
+cat client-node1-error.log
+
 
