@@ -17,16 +17,17 @@ setup-docker:
 
 # run: setup-darwin setup-docker
 run-test: setup setup-docker
+	./bench.sh
 
-	./mqtt-benchmark --broker "tcp://127.0.0.1:10001" \
-            --client-prefix "connect-to-node-1" \
-            --qos 0 \
-            --count 300 \
-            --size 10 \
-            --clients 10 \
-            --topic "topic/client1" \
-            --message-interval 100 \
-            --format text
+	# ./mqtt-benchmark --broker "tcp://127.0.0.1:10001" \
+    #         --client-prefix "connect-to-node-1" \
+    #         --qos 0 \
+    #         --count 300 \
+    #         --size 10 \
+    #         --clients 10 \
+    #         --topic "topic/client1" \
+    #         --message-interval 100 \
+    #         --format text
 
 	# ./mqtt-benchmark --broker "tcp://127.0.0.1:10002" \
     #         --client-prefix "connect-to-node-2" \
