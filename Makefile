@@ -10,7 +10,9 @@ setup-darwin:
 	./mqtt-benchmark --help
 
 setup-docker:
-	docker-compose up -d nats-server-node{1,2,3}
+	docker-compose up -d nats-server-node1
+	docker-compose up -d nats-server-node2
+	docker-compose up -d nats-server-node3
 	sleep 10
 
 # run: setup-darwin setup-docker
