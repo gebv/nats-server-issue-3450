@@ -1,5 +1,17 @@
 version: "3.7"
 services:
+  single:
+    image: nats:2.8.4-scratch
+    hostname: single
+    container_name: single
+    ports:
+      - 127.0.0.1:4222:4222
+      - 127.0.0.1:6222:6222
+      - 127.0.0.1:8222:8222
+      - 127.0.0.1:1883:1883 # mqtt
+    command: --config /config.conf
+    volumes:
+      - ./single.conf:/config.conf:ro
   nats-server-node1:
     image: nats:2.8.4-scratch
     ports:

@@ -1,28 +1,57 @@
 #!/bin/bash
 
-./mqtt-benchmark --broker "tcp://127.0.0.1:10001" \
-    --client-prefix "*service*client-1" \
-    --username="service:100" \
-    --password="*service_secret*" \
-    --qos 0 \
-    --count 300 \
-    --size 10 \
-    --clients 10 \
-    --topic "topic/client1" \
-    --message-interval 100 \
-    --format text > client-node1.log 2>client-node1-error.log &
+TEST_PIDS=""
 
-CON_PID=$!
-echo "Test: $CON_PID"
+runBench() {
+    local port=$1
+    local idx=$2
+    ./mqtt-benchmark --broker "tcp://127.0.0.1:${port}" \
+        --client-prefix "client-${idx}" \
+        --qos 0 \
+        --count 300 \
+        --size 10 \
+        --clients 10 \
+        --topic "/topic-${idx}" \
+        --format text >client-node${idx}.log 2>client-node${idx}-error.log &
 
-echo "Wait test pids: $CON_PID kill timeout: 30s"
+    local CON_PID=$!
+    echo "Test count=300, size=10, client=10: $CON_PID"
+
+    TEST_PIDS="$TEST_PIDS $CON_PID"
+}
+
+runBench 10001 1
+runBench 10002 2
+runBench 10003 3
+
+echo "Wait test pids: $TEST_PIDS kill timeout: 30s"
 sleep 30
 
-kill -9 $CON_PID
+kill -9 $TEST_PIDS
 
 echo "Tests finished"
 
 cat client-node1.log
 cat client-node1-error.log
 
+cat client-node2.log
+cat client-node2-error.log
 
+cat client-node3.log
+cat client-node3-error.log
+
+
+if docker logs node1 2>&1 | grep -q MQIsdp
+    then { echo "FOUND"; docker logs node1; }
+    else echo "NOT FOUND"
+fi
+
+if docker logs node2 2>&1 | grep -q MQIsdp
+    then { echo "FOUND"; docker logs node2; }
+    else echo "NOT FOUND"
+fi
+
+if docker logs node3 2>&1 | grep -q MQIsdp
+    then { echo "FOUND"; docker logs node3; }
+    else echo "NOT FOUND"
+fi
